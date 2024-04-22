@@ -36,9 +36,28 @@ const getAllPosts = async (req, res) => {
   }
 };
 
+const udpatePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const data = req.body;
+    const result = await postService.updatePost(id, data);
+    res.status(httpStatus.OK).json({
+      success: true,
+      message: "Post updated successfully!!",
+      data: result,
+    });
+  } catch (error) {
+    res.status(httpStatus.BAD_REQUEST).json({
+      success: false,
+      message: "Post updated failed!!",
+      error,
+    });
+  }
+};
+
 const deletePost = async (req, res) => {
   try {
-    const id = req.body;
+    const { id } = req.params;
     const result = await postService.deletePost(id);
     res.status(httpStatus.OK).json({
       success: true,
@@ -58,4 +77,5 @@ module.exports.postController = {
   createPost,
   getAllPosts,
   deletePost,
+  udpatePost,
 };
