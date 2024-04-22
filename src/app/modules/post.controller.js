@@ -36,6 +36,24 @@ const getAllPosts = async (req, res) => {
   }
 };
 
+const addLike = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await postService.addLike(id);
+    res.status(httpStatus.OK).json({
+      success: true,
+      message: "Post like is success!",
+      data: result,
+    });
+  } catch (error) {
+    res.status(httpStatus.BAD_REQUEST).json({
+      success: false,
+      message: "Post like is failed!!",
+      error,
+    });
+  }
+};
+
 const udpatePost = async (req, res) => {
   try {
     const { id } = req.params;
@@ -78,4 +96,5 @@ module.exports.postController = {
   getAllPosts,
   deletePost,
   udpatePost,
+  addLike,
 };

@@ -6,7 +6,12 @@ const createPost = async (data) => {
 };
 
 const getAllPosts = async () => {
-  const result = await Post.find();
+  const result = await Post.find({}).sort({ createdAt: "desc" });
+  return result;
+};
+
+const addLike = async (id) => {
+  const result = await Post.updateOne({ _id: id }, { $inc: { like: 1 } });
   return result;
 };
 
@@ -25,4 +30,5 @@ module.exports.postService = {
   getAllPosts,
   deletePost,
   updatePost,
+  addLike,
 };
