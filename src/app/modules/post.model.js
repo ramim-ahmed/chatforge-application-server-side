@@ -14,17 +14,17 @@ const postSchema = new Schema(
         type: String,
       },
     },
+    title: {
+      type: String,
+      required: true,
+    },
     content: {
       type: String,
       required: true,
     },
-    like: {
+    likes: {
       type: Number,
       default: 0,
-    },
-    postedDate: {
-      type: Date,
-      default: Date.now,
     },
   },
   {

@@ -5,13 +5,20 @@ const createPost = async (data) => {
   return result;
 };
 
-const getAllPosts = async () => {
-  const result = await Post.find({}).sort({ createdAt: "desc" });
+const getAllPosts = async (email) => {
+  let result;
+  if (email) {
+    result = await Post.find({ "user.email": email }).sort({
+      createdAt: "desc",
+    });
+    return result;
+  }
+  result = await Post.find({}).sort({ createdAt: "desc" });
   return result;
 };
 
 const addLike = async (id) => {
-  const result = await Post.updateOne({ _id: id }, { $inc: { like: 1 } });
+  const result = await Post.updateOne({ _id: id }, { $inc: { likes: 1 } });
   return result;
 };
 

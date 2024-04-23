@@ -21,7 +21,8 @@ const createPost = async (req, res) => {
 
 const getAllPosts = async (req, res) => {
   try {
-    const result = await postService.getAllPosts();
+    const { email } = req.query;
+    const result = await postService.getAllPosts(email);
     res.status(httpStatus.OK).json({
       success: true,
       message: "Fetch All Posts successfully!!",
