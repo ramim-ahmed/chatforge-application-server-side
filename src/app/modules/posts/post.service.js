@@ -6,9 +6,7 @@ const createPost = async (data) => {
 };
 
 const getAllPosts = async () => {
-  const result = await Post.find({})
-    .projection({ _id: 0 })
-    .sort({ createdAt: "desc" });
+  const result = await Post.find({}).sort({ createdAt: "desc" });
   return result;
 };
 
