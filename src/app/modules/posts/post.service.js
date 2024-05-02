@@ -5,15 +5,10 @@ const createPost = async (data) => {
   return result;
 };
 
-const getAllPosts = async (email) => {
-  let result;
-  if (email) {
-    result = await Post.find({ "user.email": email }).sort({
-      createdAt: "desc",
-    });
-    return result;
-  }
-  result = await Post.find({}).sort({ createdAt: "desc" });
+const getAllPosts = async () => {
+  const result = await Post.find({})
+    .projection({ _id: 0 })
+    .sort({ createdAt: "desc" });
   return result;
 };
 

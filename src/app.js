@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 // application routes
 app.get("/", (req, res) => {
   res.status(httpStatus.OK).json({
-    message: "Welcome to espresso chatforge server",
+    message: "Welcome to convo app server!!",
   });
 });
 
