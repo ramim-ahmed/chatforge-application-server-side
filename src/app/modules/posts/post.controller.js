@@ -123,7 +123,7 @@ const getAuthAccessToken = async (req, res) => {
       .status(httpStatus.OK)
       .cookie("access_token", token, {
         httpOnly: true,
-        secure: true,
+        secure: false,
         sameSite: true,
       })
       .json({
