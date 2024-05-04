@@ -1,5 +1,6 @@
+/* eslint-disable no-undef */
+const createToken = require("../../../helpers/createToken");
 const Post = require("./post.model");
-
 const createPost = async (data) => {
   const result = await Post.create(data);
   return result;
@@ -7,6 +8,13 @@ const createPost = async (data) => {
 
 const getAllPosts = async () => {
   const result = await Post.find({}).sort({ createdAt: "desc" });
+  return result;
+};
+
+const myPosts = async (email) => {
+  const result = await Post.find({ "user.email": email }).sort({
+    createdAt: "desc",
+  });
   return result;
 };
 
@@ -25,10 +33,21 @@ const deletePost = async (id) => {
   return result;
 };
 
+const getAuthToken = async (user) => {
+  const accessToken = createToken(
+    user,
+    process.env.JWT_ACCESS_TOKEN_SECRET,
+    "1h"
+  );
+  return accessToken;
+};
+
 module.exports.postService = {
   createPost,
   getAllPosts,
+  myPosts,
   deletePost,
   updatePost,
   addLike,
+  getAuthToken,
 };

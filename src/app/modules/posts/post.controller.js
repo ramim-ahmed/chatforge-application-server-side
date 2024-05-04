@@ -21,8 +21,7 @@ const createPost = async (req, res) => {
 
 const getAllPosts = async (req, res) => {
   try {
-    const { email } = req.query;
-    const result = await postService.getAllPosts(email);
+    const result = await postService.getAllPosts();
     res.status(httpStatus.OK).json({
       success: true,
       message: "Fetch All Posts successfully!!",
@@ -32,6 +31,24 @@ const getAllPosts = async (req, res) => {
     res.status(httpStatus.BAD_REQUEST).json({
       success: false,
       message: "Fetch Post failed!!",
+      error,
+    });
+  }
+};
+
+const getMyPosts = async (req, res) => {
+  try {
+    const { email } = req.query;
+    const result = await postService.myPosts(email);
+    res.status(httpStatus.OK).json({
+      success: true,
+      message: "Fetch All My Posts successfully!!",
+      data: result,
+    });
+  } catch (error) {
+    res.status(httpStatus.BAD_REQUEST).json({
+      success: false,
+      message: "Fetch My Post failed!!",
       error,
     });
   }
@@ -92,10 +109,30 @@ const deletePost = async (req, res) => {
   }
 };
 
+const getAuthAccessToken = async (req, res) => {
+  try {
+    const { user } = req.body;
+    const token = await postService.getAuthToken(user);
+    res.cookie("access_token", token).status(httpStatus.OK).json({
+      success: true,
+      message: "access token is successfully!!",
+      access_token: token,
+    });
+  } catch (error) {
+    res.status(httpStatus.BAD_REQUEST).json({
+      success: false,
+      message: "access token is failed!!",
+      error,
+    });
+  }
+};
+
 module.exports.postController = {
   createPost,
   getAllPosts,
+  getMyPosts,
   deletePost,
   udpatePost,
   addLike,
+  getAuthAccessToken,
 };

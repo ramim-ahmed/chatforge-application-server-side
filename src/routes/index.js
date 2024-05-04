@@ -1,5 +1,5 @@
 const express = require("express");
-const { postRoutes } = require("../modules/posts/post.route");
+const { postRoutes } = require("../app/modules/posts/post.route");
 const router = express.Router();
 
 const moduleRoutes = [
