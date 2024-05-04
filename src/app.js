@@ -7,17 +7,20 @@ const globalErrorHanlder = require("./middlewares/globalErrorHandler");
 const cookieParser = require("cookie-parser");
 // backend application
 const app = express();
-
 // middlware
 app.use(
   cors({
+    origin: ["http://localhost:5173"],
     credentials: true,
   })
 );
 app.use(express.json());
-app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
-
+app.use(
+  cookieParser({
+    secure: false,
+  })
+);
 // application routes
 app.get("/", (req, res) => {
   res.status(httpStatus.OK).json({

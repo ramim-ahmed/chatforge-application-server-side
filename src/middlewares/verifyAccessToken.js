@@ -2,28 +2,26 @@
 const httpStatus = require("http-status");
 const jwt = require("jsonwebtoken");
 const verifyAccessToken = (req, res, next) => {
-  try {
-    const { email } = req.query;
-    const { access_token } = req.cookies;
-    const decoded = jwt.verify(
-      access_token,
-      process.env.JWT_ACCESS_TOKEN_SECRET
-    );
-    const { email: userEmail } = decoded;
-    if (email !== userEmail) {
-      return res.status(httpStatus.FORBIDDEN).json({
-        success: false,
-        message: "Authentication Failed",
-      });
-    }
-    next();
-  } catch (error) {
-    res.status(httpStatus.FORBIDDEN).json({
+  const token = req.cookies?.access_token;
+  if (!token) {
+    return res.status(httpStatus.UNAUTHORIZED).json({
       success: false,
-      message: "Authentication Failed",
-      error,
+      message: "Unauthorised access user!!!",
     });
   }
+
+  jwt.verify(token, process.env.JWT_ACCESS_TOKEN_SECRET, (err, decoded) => {
+    // err
+    if (err) {
+      return res.status(httpStatus.UNAUTHORIZED).json({
+        success: false,
+        message: "Unauthorised access user!!!",
+      });
+    }
+    //valid token
+    req.user = decoded;
+    next();
+  });
 };
 
 module.exports = verifyAccessToken;

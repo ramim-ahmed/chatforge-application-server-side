@@ -39,6 +39,12 @@ const getAllPosts = async (req, res) => {
 const getMyPosts = async (req, res) => {
   try {
     const { email } = req.query;
+    if (req?.user?.email !== email) {
+      return res.status(httpStatus.FORBIDDEN).json({
+        success: false,
+        message: "Unauthorized aceess!!",
+      });
+    }
     const result = await postService.myPosts(email);
     res.status(httpStatus.OK).json({
       success: true,
@@ -111,13 +117,20 @@ const deletePost = async (req, res) => {
 
 const getAuthAccessToken = async (req, res) => {
   try {
-    const { user } = req.body;
+    const user = req.body;
     const token = await postService.getAuthToken(user);
-    res.cookie("access_token", token).status(httpStatus.OK).json({
-      success: true,
-      message: "access token is successfully!!",
-      access_token: token,
-    });
+    res
+      .status(httpStatus.OK)
+      .cookie("access_token", token, {
+        httpOnly: true,
+        secure: false,
+        sameSite: true,
+      })
+      .json({
+        success: true,
+        message: "access token is successfully!!",
+        access_token: token,
+      });
   } catch (error) {
     res.status(httpStatus.BAD_REQUEST).json({
       success: false,
