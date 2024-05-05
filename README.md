@@ -1,8 +1,8 @@
-# Trip Trove Backend Application
+# Convo Application | Mern Stack
 
 Documentation.
 
-Trip Trove basically a online tourism management website. that can provide country wise tour in beautiful location.
+Convo basically is post type web application platform. where as user can share thoughts or skill share and user can be like eash post. and modified post.
 
 Functional Requirements:
 
@@ -13,6 +13,7 @@ Model
 ### Posts
 
 - user can create new post
+- user can be like each post
 - user can read all post
 - user can see all post added only his/her.
 - user can delete single post provide unique id
@@ -34,7 +35,6 @@ Model
       POST /posts/create-post
       PATCH /posts/[id]
       DELETE /posts/[id]
-
 
 ---
 
