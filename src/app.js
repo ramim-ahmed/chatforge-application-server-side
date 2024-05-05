@@ -10,7 +10,7 @@ const app = express();
 // middlware
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: ["https://convo-app-one.vercel.app"],
     credentials: true,
   })
 );
